@@ -71,6 +71,98 @@ struct node{
 	struct node *right;
 };
 
+void inorderTraversal(struct node *root, int *arr);
+void quicksort2(int x[10], int first, int last);
+
+
+int *array1 = NULL, l1 = 0;
+int *array2 = NULL, l2 = 0;
+
+
+
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+
+	array1 = (int *)malloc(40 * sizeof(int));
+	array2 = (int *)malloc(40 * sizeof(int));
+	int i = 0;
+	int flag = 1;
+
+
+	if (root == NULL || head == NULL)
+	{
+		return -1;
+	}
+	else
+		inorderTraversal(root, array1);
+
+	quicksort2(array1, 0, l1 - 1);
+
+
+	for (i = 0; i < l1; i++)
+		printf(" %d", array1[i]);
+
+	while (head != NULL)
+	{
+		array2[l2++] = head->data;
+		head = head->next;
+	}
+
+	quicksort2(array2, 0, l2 - 1);
+
+	for (i = 0; i < l2; i++)
+		printf("  %d", array2[i]);
+
+	if (l1 != l2)
+		return 0;
+	for (i = 0; i < l1; i++)
+	{
+		if (array1[i] != array2[i])
+			flag = 0;
+	}
+
+	return flag;
+}
+
+void inorderTraversal(struct node *root, int *arr1)
+{
+
+	if (root == NULL) {
+		return;
+	}
+
+	inorderTraversal(root->left, arr1);
+
+	arr1[l1++] = root->data;
+
+	inorderTraversal(root->right, arr1);
+
+}
+
+void quicksort2(int x[10], int first, int last){
+	int pivot, j, temp, i;
+
+	if (first<last){
+		pivot = first;
+		i = first;
+		j = last;
+
+		while (i<j){
+			while (x[i] <= x[pivot] && i<last)
+				i++;
+			while (x[j]>x[pivot])
+				j--;
+			if (i<j){
+				temp = x[i];
+				x[i] = x[j];
+				x[j] = temp;
+			}
+		}
+
+		temp = x[pivot];
+		x[pivot] = x[j];
+		x[j] = temp;
+		quicksort2(x, first, j - 1);
+		quicksort2(x, j + 1, last);
+
+	}
 }

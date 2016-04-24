@@ -19,6 +19,11 @@ struct node_dll{
 	struct node_dll *prev;
 };
 
+void test_Problem3_spec(char strs[][6], int len, int ans);
+struct enode *newENode_spec(char *str);
+struct enode * constructEBinaryTree_spec(char strs[][6], int len);
+
+
 void printArray(int *arr, int len){
 	for (int i = 0; i < len; i++){
 		printf("%d ",arr[i]);
@@ -41,6 +46,10 @@ void printBST(struct node * root){
 		printBST(root->right);
 	}
 }
+
+
+
 int main(){
 	//Test here
+	
 };

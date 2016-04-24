@@ -57,23 +57,87 @@ struct enode{
 	struct enode *left;
 	struct enode *right;
 };
+void inorderTraversal(struct enode *root);
+int total = 0;
+
 
 /*
 Helper Functions are optional to write 
 */
 //Helper Functions Start
 int isOperator(char *data){
-	return 0;
+	if (data[0] == '+' || data[0] == '-' || data[0] == '*')
+		return 1;
+
+	else
+		return 0;
 }
 int isOperand(char *data){
-	return 0;
+	if ((data[0] == '-' && data[1] >= 1 && data[1] <= 9) || (data[0] >= 1 && data[1] <= 9))
+		return 1;
+	else
+		return 0;
 }
 int getOperand(char *data){
-	//converts data string to an integer "123" => 123
-	return 0;
+	
+	int temp, num = 0;
+	if (data[0] != '-') {
+		for (int i = 0; data[i] != '\0'; i++)
+		{
+			temp = data[i] - '0';
+			num = num * 10 + temp;
+		}
+		return num;
+	}
+
+	if (data[0] == '-') {
+		for (int i = 1; data[i] != '\0'; i++)
+		{
+			temp = data[i] - '0';
+			num = num * 10 + temp;
+		}
+		return -num;
+	}
 }
-//Helper Functions end
 int solve_tree(struct enode *root){
-    return -1;
+
+
+	int i = 0;
+
+	if (root == NULL)
+	{
+		return -1;
+	}
+	else
+		inorderTraversal(root);
+
+	printf("%d",total);
+
+	return total;
 }
+
+void inorderTraversal(struct enode *root)
+{
+
+	if (root == NULL) {
+		return;
+	}
+
+
+
+	inorderTraversal(root->left);
+
+	if (isOperator(root->data) && isOperand(root->left->data) && isOperand(root->right->data)) {
+		if (root->data[0] == '+')
+			total = total + getOperand(root->left->data) + getOperand(root->right->data);
+		if (root->data[0] == '-')
+			total = total + getOperand(root->left->data) - getOperand(root->right->data);
+		if (root->data[0] == '*')
+			total = total + getOperand(root->left->data) * getOperand(root->right->data);
+	}
+
+	inorderTraversal(root->right);
+
+}
+
 

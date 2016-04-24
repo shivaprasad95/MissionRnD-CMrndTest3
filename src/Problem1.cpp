@@ -49,8 +49,39 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-
+int sum = 0;
+void inorderTraversal(struct node *root);
 
 int get_missing_value(struct node *root,int n){
-    return -1;
+
+	int i = 0;
+	int total = 0;
+
+	if (root == NULL || n <= 0)
+	{
+		return -1;
+	}
+	else
+		inorderTraversal(root);
+
+	total = (n*(n + 1) / 2);  //sum of first n natural numbers :-)
+
+	return total - sum;
 }
+
+
+void inorderTraversal(struct node *root)
+{
+
+	if (root == NULL) {
+		return;
+	}
+
+	inorderTraversal(root->left);
+
+	sum = sum + root->data;
+
+	inorderTraversal(root->right);
+
+}
+
